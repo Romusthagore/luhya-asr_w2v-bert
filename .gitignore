@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Données volumineuses
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Modèles
+models/*
+checkpoints/*
+*.ckpt
+*.pth
+*.bin
+*.safetensors
+
+# Logs
+logs/*
+
+# Environnements
+venv/
+env/
+.venv/
+asr_luhya_env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Hugging Face
+.huggingface/

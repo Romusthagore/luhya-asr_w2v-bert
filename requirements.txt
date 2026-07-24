@@ -1,0 +1,23 @@
+# Dependencies for fine-tuning Wav2Vec2-BERT 2.0 for Luhya ASR
+
+# Core ML
+torch>=2.0.0
+torchaudio>=2.0.0
+transformers>=4.35.0
+accelerate>=0.24.0
+
+# Data Handling
+datasets>=2.14.0
+librosa>=0.10.0
+soundfile>=0.12.0
+
+# Evaluation
+jiwer>=2.5.0
+
+# Utilities
+huggingface-hub>=0.19.0
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# Optional: Experiment Tracking
+wandb>=0.15.0
