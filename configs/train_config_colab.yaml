@@ -1,0 +1,58 @@
+# Luhya ASR -- Colab: w2v-bert-2.0 following HF blog recommendations
+# run: python3 scripts/train_model.py --config config_files/ASR_train_config_luhya_colab.yaml
+
+project: "Luhya-ASR"
+output_dir: "/content/drive/MyDrive/luhya-asr-output"
+seed: 2
+report_to: "none"
+
+# Model -- Wav2Vec2-BERT 2.0 (580M), best for low-resource ASR per HF blog
+pretrained_model: "w2v-BERT"           # -> facebook/w2v-bert-2.0
+freeze_feature_encoder: true
+add_final_layer_adapter: true          # REQUIRED for w2v-bert-2.0 (prevents loss explosion)
+
+# Training
+batch_size: 4                           # lower for T4; effective batch = 4 * 8 = 32
+gradient_accumulation_steps: 8
+num_epochs: 5
+max_steps: -1
+learning_rate: 0.00005                  # 5e-5
+warmup_steps: 500
+fp16: true                              # T4 sweet spot
+bf16: false
+gradient_checkpointing: true
+save_steps: 500
+eval_steps: 500
+logging_steps: 10
+save_total_limit: 1
+ctc_zero_infinity: true
+
+# Data
+use_custom_dataset: false
+dataset_path: "DDD-Kenya/Luhya-ASR-Data-subset-50h"
+train_split: "train"
+eval_split: "validation"
+
+# 40 hours, 80/20 split
+max_data_hours: 40.0
+validation_split_pct: 0.2
+
+# Memory safety on T4 Colab
+max_audio_length: 30.0
+num_proc: 2
+
+# Performance optimizations
+use_torch_compile: false        # enable on A100/L4 runs; T4 benefit is modest
+torch_compile_mode: "reduce-overhead"
+group_by_length: true
+use_fused_optimizer: false
+persistent_workers: true
+
+sample: false
+sample_size: 1000
+
+# Text preprocessing
+add_language_tokens: false
+apply_accent_replacements: false
+
+character_set: " !'*,-.0123456789;:?abcdefghijklmnopqrstuvwxyz"
